@@ -1,0 +1,23 @@
+{
+  "name": "nfl-scores",
+  "version": "0.0.1",
+  "description": "Código para la parte servidor",
+  "main": "src/server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/irodgal/NFLScores"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "request": "^2.67.0"
+  },
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "mocha"
+  },
+  "author": "Iván R. Galicia",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.4.4"
+  }
+}
