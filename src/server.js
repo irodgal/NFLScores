@@ -1,41 +1,29 @@
-//cargamos el package express y creamos nuestra app
-var express = require('express');
-var app = express();
-var path = require('path');
-var request = require('request');
-var parseString = require('xml2js').parseString;
+var express = require('express'),
+	app = express(),
+	methodOverride = require("method-override");
 
-//enviamos nuestro archivo index.html al usuario como página de inicio
-app.get('/nflscores', function(req, res) {
+//Middleware
+app.use(methodOverride());
 
-	var urlRegularSeason = {
-		url: 'http://www.nfl.com/liveupdate/scorestrip/ss.xml',
-		method: 'GET'
-	};
+//Import Controller
+var NFLScoresCtrl = require('./controllers/nflscores');
 
-	var urlPostSeason = {
-		url: 'http://www.nfl.com/liveupdate/scorestrip/postseason/ss.xml',
-		method: 'GET'
-	};
+//API Routes
+var nflscores = express.Router();
 
-	//var bosy2;
-	request(urlRegularSeason, function(error, response, body) {
+nflscores.route('/nflscores').get(NFLScoresCtrl.getScores);
 
-		if (!error && response.statusCode == 200) {
-			res.setHeader('Content-Type', 'application/json');
+app.use('/', nflscores);
 
-			//en body tenemos el xml desde nfl.com
-			var objToResponse;
-
-			parseString(body, function(err, result) {
-				objToResponse = result;
-			});
-
-			res.send(JSON.stringify(objToResponse));
-		}
+// captura del resto de peticiones no permitidas
+nflscores.all('*', function(req, res) {
+	res.writeHead(404, {
+		"Content-Type": "text/html"
 	});
+	res.write('Petici&oacute;n no permitida (cambiar c&oacute;digo?)!!!\n');
+	res.end();
 });
 
-//iniciamos el servidor
-app.listen(11337);
-console.log('Escuchando en el 11337');
+app.listen(11337, function() {
+	console.log('Escuchando en el 11337');
+});

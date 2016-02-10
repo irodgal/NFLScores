@@ -28,4 +28,31 @@ describe("NFLScores", function() {
 			});
 		});
 	});
+
+	describe("Petición no permitida", function() {
+
+		var urlGet = {
+			url: 'http://localhost:11337/XXX',
+			method: 'GET'
+		},
+		urlPost = {
+			url: 'http://localhost:11337/NFLScores',
+			method: 'POST'
+		};
+
+		it("GET - returns status 404", function(done) {
+			request(urlGet, function(error, response, body) {
+				expect(response.statusCode).to.equal(404);
+				done();
+			});
+		});
+
+		it("POST - returns status 404", function(done) {
+			request(urlPost, function(error, response, body) {
+				expect(response.statusCode).to.equal(404);
+				done();
+			});
+		});
+
+	});
 })
