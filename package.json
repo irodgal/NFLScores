@@ -19,6 +19,8 @@
   },
   "scripts": {
     "start": "node ./src/server.js",
+    "start-debug": "node --debug ./src/server.js",
+    "debugger": "node-inspector --web-port=18080 ./src/server.js",
     "test": "mocha --reporter spec"
   },
   "author": "Iván R. Galicia",
