@@ -24,6 +24,7 @@ nflscores.all('*', function(req, res) {
 	res.end();
 });
 
-app.listen(11337, function() {
-	console.log('Escuchando en el 11337');
+var port = process.env.VCAP_APP_PORT || 11337;
+app.listen(port, function() {
+	console.log('Escuchando en el ' + port);
 });

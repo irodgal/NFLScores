@@ -1,0 +1,5 @@
+---
+applications:
+- name:    NFLScores
+  host:    NFLScores
+  memory:  128M
