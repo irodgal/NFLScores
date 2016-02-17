@@ -15,8 +15,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.4",
+    "mocha-lcov-reporter": "^1.1.0",
     "supertest": "^1.2.0"
   },
   "scripts": {
@@ -24,7 +26,8 @@
     "start-debug": "node --debug ./src/server.js",
     "debugger": "node-inspector --web-port=18080 ./src/server.js",
     "test": "mocha -R spec",
-    "test-coverage": "istanbul cover _mocha -- --recursive"
+    "test-coverage": "istanbul cover _mocha -- --recursive",
+    "coveralls": "npm run-script test-coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Iván R. Galicia",
   "license": "MIT"
