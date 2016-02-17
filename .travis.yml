@@ -10,6 +10,7 @@ cache:
     - node_modules
 
 script:
+  - npm start
   - npm test
 
 deploy:
