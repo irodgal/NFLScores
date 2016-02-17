@@ -25,6 +25,9 @@ nflscores.all('*', function(req, res) {
 });
 
 var port = process.env.VCAP_APP_PORT || 11337;
-app.listen(port, function() {
+var server = app.listen(port, function() {
 	console.log('Escuchando en el ' + port);
 });
+
+//para que este disponible en los test
+module.exports = server;

@@ -1,58 +1,77 @@
 var expect = require("chai").expect;
-var request = require("request");
+//var request = require("request");
+var request = require("supertest");
+
+// This agent refers to PORT where program is runninng.
+//var server = supertest.agent("http://localhost:11337");
 
 describe("NFLScores", function() {
+	var server;
+	before(function() {
+		server = require('../src/server');
+	});
+
+	after(function() {
+		server.close();
+	});
+
 	describe("Conexión al servidor", function() {
 
-		var url = "http://localhost:11337/NFLScores";
-
 		it("returns status 200", function(done) {
-			request(url, function(error, response, body) {
-				expect(response.statusCode).to.equal(200);
-				done();
-			});
+			request(server)
+				.get("/NFLScores")
+				.expect("Content-type", /json/)
+				.expect(200)
+				.end(function(err, res) {
+					expect(res.status).to.equal(200);
+					done();
+				});
 		});
 
 		it("returns json", function(done) {
-			request(url, function(error, response, body) {
-				expect(body).to.exist;
-				expect(JSON.parse(body)).to.exist;
-				done();
-			});
+			request(server)
+				.get("/NFLScores")
+				.expect("Content-type", /json/)
+				.expect(200)
+				.end(function(err, res) {
+					expect(res.body).to.exist;
+					done();
+				});
 		});
 
 		it("returns json have property 'ss'", function(done) {
-			request(url, function(error, response, body) {
-				expect(JSON.parse(body)).to.have.property('ss');
-				done();
-			});
+			request(server)
+				.get("/NFLScores")
+				.expect("Content-type", /json/)
+				.expect(200)
+				.end(function(err, res) {
+					expect(res.body).to.have.property('ss');
+					done();
+				});
 		});
 	});
 
 	describe("Petición no permitida", function() {
 
-		var urlGet = {
-			url: 'http://localhost:11337/XXX',
-			method: 'GET'
-		},
-		urlPost = {
-			url: 'http://localhost:11337/NFLScores',
-			method: 'POST'
-		};
-
 		it("GET - returns status 404", function(done) {
-			request(urlGet, function(error, response, body) {
-				expect(response.statusCode).to.equal(404);
-				done();
-			});
-		});
+			request(server)
+				.get("/random")
+				.expect(404)
+				.end(function(err, res) {
+					expect(res.status).to.equal(404);
+					done();
+				});
+		})
 
 		it("POST - returns status 404", function(done) {
-			request(urlPost, function(error, response, body) {
-				expect(response.statusCode).to.equal(404);
-				done();
-			});
-		});
+			request(server)
+				.post("/NFLScores")
+				.expect(404)
+				.end(function(err, res) {
+					expect(res.status).to.equal(404);
+					done();
+				});
+		})
 
 	});
 })
