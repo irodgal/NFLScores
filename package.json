@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.4",
     "supertest": "^1.2.0"
   },
@@ -22,7 +23,8 @@
     "start": "node ./src/server.js",
     "start-debug": "node --debug ./src/server.js",
     "debugger": "node-inspector --web-port=18080 ./src/server.js",
-    "test": "mocha -R spec"
+    "test": "mocha -R spec",
+    "test-coverage": "istanbul cover _mocha -- --recursive"
   },
   "author": "Iván R. Galicia",
   "license": "MIT"
