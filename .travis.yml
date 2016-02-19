@@ -4,6 +4,11 @@ node_js:
   - '5'
   - '4.2.4'
 
+notifications:
+  email:
+    on_success: always
+    on_failure: always
+
 sudo: false
 
 cache:
@@ -14,7 +19,10 @@ install:
   - npm install
 
 script:
-  - npm test
+  - npm run-script test-coverage
+
+after_success:  
+  - npm run-script coveralls
 
 deploy:
   provider: cloudfoundry
@@ -24,3 +32,4 @@ deploy:
   password: $CF_PASS
   organization: $CF_ORG
   space: $CF_ENV
+  skip_cleanup: true
