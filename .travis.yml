@@ -22,7 +22,7 @@ script:
   - npm run-script test-coverage
 
 after_success:  
-  - coveralls
+  - npm run-script coveralls
 
 deploy:
   provider: cloudfoundry
